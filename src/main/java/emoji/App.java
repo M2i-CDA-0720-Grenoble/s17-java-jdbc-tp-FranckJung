@@ -16,10 +16,16 @@ public final class App {
         Console.colorPrint("voici la liste des émoticones", ConsoleColor.CYAN);
         for (Emoji emoji: Emoji.findAll())
         {
-            Console.colorPrint("code : " + emoji.getCode() + " emoji :" + emoji.getCharacters(), ConsoleColor.GREEN);
+            Console.colorPrint("code: " + emoji.getCode() + " | emoji:" + emoji.getCharacters(), ConsoleColor.GREEN);
         }
-        Console.colorPrint("Veuillez entrer le code de l'emoji désirée", ConsoleColor.CYAN);
+
+        Console.colorPrint("Veuillez entrer le code de l'emoji désiré:", ConsoleColor.CYAN);
         String userInput = Console.input();
-        System.out.println(Emoji.findByCode(userInput).getCharacters());
+        
+        if(Emoji.findByCode(userInput) != null){
+            Console.colorPrint(Emoji.findByCode(userInput).getCharacters(), ConsoleColor.GREEN);
+        }else{
+            Console.warn("Ce code n'existe pas désolé");
+        }
     }
 }
