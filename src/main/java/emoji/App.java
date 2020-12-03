@@ -1,6 +1,7 @@
 package emoji;
 
 import emoji.Models.Emoji;
+import emoji.Models.Tags;
 import emoji.Utils.*;
 
 public final class App {
@@ -19,13 +20,20 @@ public final class App {
             Console.colorPrint("code: " + emoji.getCode() + " | emoji:" + emoji.getCharacters(), ConsoleColor.GREEN);
         }
 
-        Console.colorPrint("Veuillez entrer le code de l'emoji désiré:", ConsoleColor.CYAN);
+        Console.colorPrint("Veuillez entrer le code de l'emoji désiré ou sa catégorie:", ConsoleColor.CYAN);
         String userInput = Console.input();
-        
-        if(Emoji.findByCode(userInput) != null){
-            Console.colorPrint(Emoji.findByCode(userInput).getCharacters(), ConsoleColor.GREEN);
+        //cherche si la catégorie existe et renvoie tous les emoticones correspondant
+        if(Tags.findByName(userInput)!= null){
+            for(Emoji emoji : Tags.findByName(userInput)){
+                Console.colorPrint(emoji.getCode() + " " + emoji.getCharacters(), ConsoleColor.GREEN);
+            }
         }else{
-            Console.warn("Ce code n'existe pas désolé");
+            //si la catégorie n'a pas été trouvée, cherche si l'emoticone existe
+            if(Emoji.findByCode(userInput) != null){
+                Console.colorPrint(Emoji.findByCode(userInput).getCharacters(), ConsoleColor.GREEN);
+            }else{
+                Console.warn("Ce code ou cette catégorie n'existe pas désolé");
+            }
         }
     }
 }
